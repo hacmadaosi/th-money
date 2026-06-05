@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "front-end",
-    "slug": "front-end",
+    "name": "ThMoney",
+    "slug": "th-money",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "frontend",
+    "scheme": "thmoney",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
@@ -20,7 +20,9 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
+      "bundler": "metro",
       "output": "static",
+      "baseUrl": "/th-money",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [

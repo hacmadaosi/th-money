@@ -1,5 +1,6 @@
 {
-  "name": "front-end",
+  "name": "th-money",
+  "homepage": "https://<hacmadaosi>.github.io/<th-money>/",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "dependencies": {
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
+    "gh-pages": "^6.3.0",
     "typescript": "~6.0.3"
   },
   "scripts": {
@@ -40,7 +42,10 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "build:web": "npx expo export -p web && powershell -Command \"Copy-Item dist/index.html dist/404.html\"",
+    "predeploy": "npm run build:web",
+    "deploy": "gh-pages -d dist"
   },
   "private": true
 }
