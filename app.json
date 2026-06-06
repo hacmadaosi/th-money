@@ -22,7 +22,6 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "baseUrl": "/th-money",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -40,7 +39,8 @@
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      "reactCompiler": true,
+      "baseUrl": "/th-money"
     }
   }
 }
