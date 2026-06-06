@@ -1,5 +1,5 @@
-import { useExpenseStore } from "@/app/store/expenseStore";
 import { LAYOUT } from "@/constants/layout";
+import { useExpenseStore } from "@/store/expenseStore";
 import { useState } from "react";
 import { Alert, Platform, StyleSheet, View } from "react-native";
 import Button from "../common/Button";

@@ -1,8 +1,8 @@
 import ExpenseInput from "@/components/home/ExpenseInput";
 import ExpenseList from "@/components/home/ExpenseList";
+import { useExpenseStore } from "@/store/expenseStore";
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useExpenseStore } from "../store/expenseStore";
 
 // import { mockExpenses } from "@/data/mockExpenses";
 
