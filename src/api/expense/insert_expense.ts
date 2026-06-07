@@ -1,28 +1,40 @@
-// src/api/expense.ts
 import { supabase } from "@/services/supabase";
-import { DBResponse } from "@/types/response";
+import { _ResponseDB } from "@/types/response";
 
 export const createExpense = async (
-  id_user: number,
   amount: number,
   description: string,
-): Promise<DBResponse> => {
-  // Gọi RPC sang Supabase
-  const { data, error } = await supabase.rpc("insert_expense", {
-    amount_input: amount,
-    description_input: description,
-    user_by_input: id_user,
-  });
+): Promise<_ResponseDB> => {
+  try {
+    const { data, error } = await supabase.rpc("insert_expense", {
+      amount_input: amount,
+      description_input: description,
+    });
 
-  if (error) {
-    console.error("Error inserting expense:", error);
+    if (error) {
+      console.error("[fetchExpense]", error);
+
+      return {
+        success: false,
+        message: error.message,
+        code: 500,
+        data: [],
+      };
+    }
+    return {
+      success: true,
+      message: "Thêm khoản chi tiêu thành công",
+      code: 200,
+      data: data.data[0],
+    };
+  } catch (error) {
+    console.error("[fetchExpense]", error);
+
     return {
       success: false,
-      message: error.message,
+      message: "Lỗi hệ thống vui lòng thử lại sau.",
       code: 500,
-      data: null,
+      data: [],
     };
   }
-
-  return data;
 };

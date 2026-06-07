@@ -1,23 +1,21 @@
-import { _ExpenseItem } from "@/types";
+import { LAYOUT } from "@/constants/layout";
+import { useExpenseStore } from "@/store/expenseStore";
+import { _Expense } from "@/types";
 import { useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ReanimatedSwipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
 interface Props {
-  expense: _ExpenseItem;
+  expense: _Expense;
 }
 
 export default function ExpenseListItem({ expense }: Props) {
   const swipeableRef = useRef<any>(null);
+  const { setSelectedExpense, setExpenseToDelete } = useExpenseStore();
 
   const renderRightActions = () => {
     return (
-      <TouchableOpacity
-        style={styles.deleteAction}
-        onPress={() => {
-          console.log("Delete: ", expense.id);
-        }}
-      >
+      <TouchableOpacity style={styles.deleteAction}>
         <Text style={styles.actionText}>Remove</Text>
       </TouchableOpacity>
     );
@@ -32,11 +30,11 @@ export default function ExpenseListItem({ expense }: Props) {
   };
 
   const handleDelete = () => {
-    console.log("Delete: ", expense.id);
+    setExpenseToDelete(expense);
   };
 
   const handleUpdate = () => {
-    console.log("Update: ", expense.id);
+    setSelectedExpense(expense);
   };
 
   return (
@@ -92,14 +90,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginVertical: 5,
+    padding: LAYOUT.padding,
     backgroundColor: "#f0f0f0",
     borderRadius: 5,
     borderColor: "#ddd",
     borderWidth: 1,
-    boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.05)",
   },
   description: {
     fontSize: 16,

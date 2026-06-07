@@ -1,22 +1,38 @@
+import NavigationBar from "@/components/common/NaviagationBar";
 import ExpenseInput from "@/components/home/ExpenseInput";
 import ExpenseList from "@/components/home/ExpenseList";
+import { COMPONENT } from "@/constants/component";
+import { LAYOUT } from "@/constants/layout";
 import { useExpenseStore } from "@/store/expenseStore";
 import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 // import { mockExpenses } from "@/data/mockExpenses";
 
 export default function Home() {
-  // const [expenses, setExpenses] = useState<_ExpenseList | null>(null);
-  const { expenses, refreshExpense } = useExpenseStore();
+  const { expenses, refreshExpense, expenseToDelete, setExpenseToDelete } =
+    useExpenseStore();
+
+  const handleLoading = async () => {
+    const res = await refreshExpense();
+    if (!res.success) {
+      Toast.show({
+        type: "error",
+        text1: "Lỗi tải dữ liệu",
+        text2: res.message,
+      });
+    }
+  };
 
   useEffect(() => {
-    refreshExpense();
+    handleLoading();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Expense Management</Text>
+      <NavigationBar />
+      <Text style={COMPONENT.title}>Expense Management</Text>
       <ExpenseInput />
       <ExpenseList expenses={expenses} />
     </View>
@@ -27,16 +43,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: LAYOUT.backgroundColor,
     flexDirection: "column",
-    gap: 20,
-    paddingVertical: 20,
-    paddingHorizontal: 48,
-  },
-
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
+    gap: LAYOUT.gap,
+    padding: LAYOUT.padding,
   },
 });

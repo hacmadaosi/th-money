@@ -1,7 +1,8 @@
-export interface _ExpenseItem {
+export interface _Expense {
   id: number;
   amount: number;
   description: string;
+  created_at?: string;
 }
 
 export interface _DailyExpense {
@@ -9,7 +10,7 @@ export interface _DailyExpense {
   date: string;
   dayOfWeek: string;
   total: number;
-  expenses: _ExpenseItem[];
+  expenses: _Expense[];
 }
 
 export interface _ExpenseList {
@@ -25,4 +26,3 @@ export interface _ExpenseList {
     averagePerDay: number;
   };
 }
-

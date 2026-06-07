@@ -1,6 +1,6 @@
-export interface DBResponse {
+export interface _ResponseDB {
   success: boolean;
   message: string;
   code: number;
-  data: any | null;
+  data: any;
 }
