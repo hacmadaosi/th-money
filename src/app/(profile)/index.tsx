@@ -8,29 +8,27 @@ import { StyleSheet, View } from "react-native";
 
 export default function Profile() {
   const { logout } = useAuthStore();
-  const { setVisibleDialog } = useSystemStore();
+  const { setVisibleDialog, setDialogDisplay } = useSystemStore();
 
-  const handleLogout = () => {
-    setVisibleDialog(true);
-  };
   const handleSubmit = () => {
     setVisibleDialog(false);
     logout();
   };
-  const handleDismiss = () => {
-    setVisibleDialog(false);
+
+  const handleLogout = () => {
+    setVisibleDialog(true);
+    setDialogDisplay({
+      content: "Vui lòng xác nhận đăng xuất tài khoản.",
+      title: "Thông báo đăng xuất",
+      onSubmit: handleSubmit,
+    });
   };
 
   return (
     <View style={styles.container}>
       <Button title="Đăng xuất" onPress={handleLogout} />
       <NavigationBar />
-      <CustomDialog
-        onSubmit={handleSubmit}
-        onDismiss={handleDismiss}
-        title="Thông báo đăng xuất"
-        content="Vui lòng xác nhận đăng xuất tài khoản."
-      />
+      <CustomDialog />
     </View>
   );
 }

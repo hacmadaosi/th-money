@@ -12,11 +12,10 @@ interface ExpenseState {
   expenseToDelete: _Expense | null;
 
   setSelectedExpense: (_expense: _Expense | null) => void;
-  setExpenseToDelete: (_expense: _Expense | null) => void;
 
   refreshExpense: () => Promise<_ResponseDB>;
   addExpense: (expense: _Expense) => Promise<_ResponseDB>;
-  removeExpense: (id_user: number, id_expense: number) => Promise<_ResponseDB>;
+  removeExpense: () => Promise<_ResponseDB>;
 }
 export const useExpenseStore = create<ExpenseState>((set, get) => ({
   expenses: null,
@@ -24,7 +23,6 @@ export const useExpenseStore = create<ExpenseState>((set, get) => ({
   selectedExpense: null,
   expenseToDelete: null,
 
-  setExpenseToDelete: (_expense) => set({ expenseToDelete: _expense }),
   setSelectedExpense: (_expense) => set({ selectedExpense: _expense }),
   refreshExpense: async () => {
     const res = await fetchExpense();
@@ -44,8 +42,9 @@ export const useExpenseStore = create<ExpenseState>((set, get) => ({
     return res;
   },
 
-  removeExpense: async (expense_id, user_id) => {
-    const res = await deleteExpense(expense_id, user_id);
+  removeExpense: async () => {
+    const { selectedExpense } = get();
+    const res = await deleteExpense(selectedExpense!.id);
 
     await get().refreshExpense();
     return res;

@@ -2,12 +2,10 @@ import { supabase } from "@/services/supabase";
 import { _ResponseDB } from "@/types/response";
 
 export const deleteExpense = async (
-  user_id: number,
   expense_id: number,
 ): Promise<_ResponseDB> => {
-  const { data, error } = await supabase.rpc("insert_expense", {
-    user_by_input: user_id,
-    expense_id_input: expense_id,
+  const { data, error } = await supabase.rpc("delete_expense", {
+    id_input: expense_id,
   });
 
   if (error) {

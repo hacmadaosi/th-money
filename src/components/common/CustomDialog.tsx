@@ -5,33 +5,28 @@ import { Dialog, Portal, Text } from "react-native-paper";
 import Button from "./Button";
 
 interface Props {
-  title: string;
-  content: string;
   type?: "confirmation" | "informational";
-  onDismiss: () => void;
-  onSubmit: () => void;
 }
 
-export default function CustomDialog({
-  onDismiss,
-  onSubmit,
-  title,
-  content,
-  type = "confirmation",
-}: Props) {
-  const { visibleDialog } = useSystemStore();
+export default function CustomDialog({ type = "confirmation" }: Props) {
+  const { visibleDialog, setVisibleDialog, dialogDisplay } = useSystemStore();
+
   return (
     <Portal>
       <Dialog visible={visibleDialog} style={styles.dialog}>
         <Dialog.Title>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>{dialogDisplay?.title}</Text>
         </Dialog.Title>
         <Dialog.Content>
-          <Text style={styles.content}>{content}</Text>
+          <Text style={styles.content}>{dialogDisplay?.content}</Text>
         </Dialog.Content>
         <Dialog.Actions style={styles.buttonContainer}>
-          <Button title="Quay lại" variant="secondary" onPress={onDismiss} />
-          <Button title="Xác nhận" onPress={onSubmit} />
+          <Button
+            title="Quay lại"
+            variant="secondary"
+            onPress={() => setVisibleDialog(false)}
+          />
+          <Button title="Xác nhận" onPress={dialogDisplay?.onSubmit} />
         </Dialog.Actions>
       </Dialog>
     </Portal>

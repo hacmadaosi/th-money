@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text } from "react-native";
 interface Props {
   title: string;
   variant?: "primary" | "secondary";
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 export default function Button({ title, variant = "primary", onPress }: Props) {

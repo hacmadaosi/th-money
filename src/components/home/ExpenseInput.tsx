@@ -12,6 +12,13 @@ export default function ExpenseInput() {
   const [loading, setLoading] = useState(false);
   const { addExpense, selectedExpense, setSelectedExpense } = useExpenseStore();
 
+  useEffect(() => {
+    if (!selectedExpense) {
+      setAmount("");
+      setDescription("");
+    }
+  }, [selectedExpense]);
+
   const handleAddExpense = async () => {
     if (loading) return;
 

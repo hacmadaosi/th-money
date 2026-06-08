@@ -1,3 +1,4 @@
+import CustomDialog from "@/components/common/CustomDialog";
 import NavigationBar from "@/components/common/NaviagationBar";
 import ExpenseInput from "@/components/home/ExpenseInput";
 import ExpenseList from "@/components/home/ExpenseList";
@@ -11,8 +12,7 @@ import Toast from "react-native-toast-message";
 // import { mockExpenses } from "@/data/mockExpenses";
 
 export default function Home() {
-  const { expenses, refreshExpense, expenseToDelete, setExpenseToDelete } =
-    useExpenseStore();
+  const { expenses, refreshExpense, expenseToDelete } = useExpenseStore();
 
   const handleLoading = async () => {
     const res = await refreshExpense();
@@ -35,6 +35,7 @@ export default function Home() {
       <Text style={COMPONENT.title}>Expense Management</Text>
       <ExpenseInput />
       <ExpenseList expenses={expenses} />
+      <CustomDialog />
     </View>
   );
 }

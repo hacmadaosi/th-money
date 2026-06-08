@@ -1,5 +1,6 @@
 import { LAYOUT } from "@/constants/layout";
 import { useExpenseStore } from "@/store/expenseStore";
+import { useSystemStore } from "@/store/systemStore";
 import { _Expense } from "@/types";
 import { useRef } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -11,8 +12,13 @@ interface Props {
 
 export default function ExpenseListItem({ expense }: Props) {
   const swipeableRef = useRef<any>(null);
-  const { setSelectedExpense, setExpenseToDelete } = useExpenseStore();
-
+  const { setSelectedExpense, removeExpense } = useExpenseStore();
+  const {
+    visibleDialog,
+    setVisibleDialog,
+    setDialogDisplay,
+    clearDialogDisplay,
+  } = useSystemStore();
   const renderRightActions = () => {
     return (
       <TouchableOpacity style={styles.deleteAction}>
@@ -28,9 +34,20 @@ export default function ExpenseListItem({ expense }: Props) {
       </TouchableOpacity>
     );
   };
-
+  const handleSubmit = () => {
+    removeExpense();
+    setSelectedExpense(null);
+    clearDialogDisplay();
+    setVisibleDialog(false);
+  };
   const handleDelete = () => {
-    setExpenseToDelete(expense);
+    setSelectedExpense(expense);
+    setVisibleDialog(true);
+    setDialogDisplay({
+      title: "Thông báo",
+      content: `Bạn có muốn xóa khoản chi tiêu "${expense.description}" không?`,
+      onSubmit: handleSubmit,
+    });
   };
 
   const handleUpdate = () => {
